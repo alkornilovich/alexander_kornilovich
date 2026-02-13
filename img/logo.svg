@@ -20,9 +20,9 @@
 
   <!-- Текст справа от льва -->
   <text x="72" y="30" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="white" letter-spacing="0.5px">
-    Корнилович
+    Корнилович Александр
   </text>
   <text x="72" y="48" font-family="Inter, sans-serif" font-size="14" font-weight="400" fill="white" opacity="0.9" letter-spacing="0.3px">
-    Александр
+    Персональный сайт 
   </text>
 </svg>
