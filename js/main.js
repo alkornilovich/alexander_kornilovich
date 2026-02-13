@@ -306,3 +306,46 @@
   }
   document.addEventListener('mousemove', cursorMovingAnimation);
 })(jQuery); // End of use strict
+
+
+// =============
+// Multi-language support
+// =============
+
+(function ($) {
+  'use strict';
+
+  function switchLanguage(lang) {
+    $('[data-lang]').hide();
+    $('[data-lang="' + lang + '"]').show();
+    localStorage.setItem('preferred-lang', lang);
+    
+    // Optional: highlight active button
+    $('.lang-btn').removeClass('active');
+    $('.lang-btn[data-lang="' + lang + '"]').addClass('active');
+  }
+
+  $(document).ready(function () {
+    // Add language switcher buttons if not exists
+    if ($('.language-switcher').length === 0) {
+      const switcher = `
+        <div class="language-switcher" style="position: absolute; top: 20px; right: 20px; z-index: 1000;">
+          <button class="lang-btn" data-lang="ru" style="background: none; border: 1px solid #ccc; padding: 4px 8px; margin: 0 4px; cursor: pointer;">Русский</button>
+          <button class="lang-btn" data-lang="en" style="background: none; border: 1px solid #ccc; padding: 4px 8px; margin: 0 4px; cursor: pointer;">English</button>
+        </div>
+      `;
+      $('body').prepend(switcher);
+    }
+
+    // Set initial language
+    const savedLang = localStorage.getItem('preferred-lang') || 'ru';
+    switchLanguage(savedLang);
+
+    // Handle clicks
+    $(document).on('click', '.lang-btn', function () {
+      const lang = $(this).data('lang');
+      switchLanguage(lang);
+    });
+  });
+
+})(jQuery);
