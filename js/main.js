@@ -305,5 +305,72 @@
     }
   }
   document.addEventListener('mousemove', cursorMovingAnimation);
+// =============
+// Multi-language support (ru/en)
+// =============
+
+function switchLanguage(lang) {
+  // Меняем атрибут lang у <html>
+  document.documentElement.setAttribute('lang', lang);
+  
+  // Скрываем все элементы с data-lang
+  $('[data-lang]').hide();
+  
+  // Показываем только нужные
+  $('[data-lang="' + lang + '"]').show();
+  
+  // Сохраняем выбор
+  localStorage.setItem('preferred-lang', lang);
+  
+  // Подсвечиваем активную кнопку
+  $('.lang-btn').removeClass('active');
+  $('.lang-btn[data-lang="' + lang + '"]').addClass('active');
+}
+
+$(document).ready(function () {
+  // Добавляем переключатель, если его ещё нет
+  if ($('.language-switcher').length === 0) {
+    const switcher = `
+      <div class="language-switcher" style="
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        display: flex;
+        gap: 8px;
+        font-size: 14px;
+      ">
+        <button class="lang-btn" data-lang="ru" style="
+          background: rgba(255,255,255,0.15);
+          border: 1px solid rgba(255,255,255,0.3);
+          color: white;
+          padding: 4px 10px;
+          border-radius: 4px;
+          cursor: pointer;
+        ">Русский</button>
+        <button class="lang-btn" data-lang="en" style="
+          background: rgba(255,255,255,0.15);
+          border: 1px solid rgba(255,255,255,0.3);
+          color: white;
+          padding: 4px 10px;
+          border-radius: 4px;
+          cursor: pointer;
+        ">English</button>
+      </div>
+    `;
+    $('body').prepend(switcher);
+  }
+
+  // Устанавливаем язык при загрузке
+  const savedLang = localStorage.getItem('preferred-lang') || 'ru';
+  switchLanguage(savedLang);
+
+  // Обработчик кликов
+  $(document).on('click', '.lang-btn', function () {
+    const lang = $(this).attr('data-lang');
+    switchLanguage(lang);
+  });
+});
+  
 })(jQuery); // End of use strict
 
